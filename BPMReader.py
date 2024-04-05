@@ -68,14 +68,18 @@ class ManifestFilter(object):
 
     def get_bpm_records(self):
         for record in self._manifest_reader.get_bpm_records():
-            if record.chromosome == "0" or record.pos == 0:
-                continue
-            if self._loci_to_filter and record.name in self._loci_to_filter:
-                continue
-            if record.is_indel() and self._skip_indels:
-                self._logger.warning("Skipping indel " + record.name)
-                continue
-            yield record
+            try:
+                if record.chromosome == "0" or record.pos == 0:
+                    continue
+                if self._loci_to_filter and record.name in self._loci_to_filter:
+                    continue
+                if record.is_indel() and self._skip_indels:
+                    self._logger.warning("Skipping indel " + record.name)
+                    continue
+                yield record
+            except Exception as error:
+                self._logger.warn("Failed to process entry for record %s: %s", record.name, str(error))
+
 
 class CSVManifestReader(object):
     """
