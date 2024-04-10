@@ -13,9 +13,9 @@ RUN mkdir /src && mv *.whl /src
 FROM alpine:3.11
 ADD scripts/* ./*.py /usr/local/bin/
 ADD tests /tests
-COPY --from=0 /src/*whl /src/
+COPY --from=0 /src/*.whl /src/
 RUN apk update && apk add --no-cache py2-pip python2 xz-dev libcurl
-RUN pip install /src/*.whl && rm /src/*whl
+RUN pip install /src/*.whl && rm /src/*.whl
 RUN mkdir /data && chmod 777 /data
 
 # Run
