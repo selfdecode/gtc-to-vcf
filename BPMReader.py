@@ -36,7 +36,10 @@ class BPMReader(object):
         """
         bpm = self._bpm
         for idx in range(len(bpm.addresses)):
-            yield BPMRecord(bpm.names[idx], bpm.addresses[idx], None, bpm.chroms[idx], bpm.map_infos[idx], bpm.snps[idx], bpm.ref_strands[idx], bpm.assay_types[idx], None, None, None, None, idx, self._logger)
+            try:
+                yield BPMRecord(bpm.names[idx], bpm.addresses[idx], None, bpm.chroms[idx], bpm.map_infos[idx], bpm.snps[idx], bpm.ref_strands[idx], bpm.assay_types[idx], None, None, None, None, idx, self._logger)
+            except Exception as error:
+                self._logger.warn("Failed to process entry for record %s: %s", bpm.names[idx], str(error))
 
 class ManifestFilter(object):
     """
