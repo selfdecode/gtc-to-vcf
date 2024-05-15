@@ -802,7 +802,7 @@ class SourceStrand:
         Returns:
             str : string representation of source strand annotation
         """
-        if source_strand == "U" or source_strand == "":
+        if source_strand in ["U", "", "?"]:
             return SourceStrand.Unknown
         if source_strand == "F":
             return SourceStrand.Forward
@@ -845,7 +845,7 @@ class RefStrand:
         Returns:
             int : int representation of reference strand annotation (e.g. RefStrand.Plus)
         """
-        if ref_strand == "U" or ref_strand == "":
+        if ref_strand in ["U", "", "?"]:
             return RefStrand.Unknown
         if ref_strand == "+":
             return RefStrand.Plus
